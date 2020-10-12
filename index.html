@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>
+            Student Result Board
+        </title>
+
+        <script type="text/javascript" src="data.json"></script>
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+    </head>
+    <body>
+        <h2 style="text-align: center;">Student Result Board</h2><br>
+        <div class="container">
+            <div class="table-responsive"> 
+                <table class="table table-bordered table-striped " id="student_table">
+                    <tr id="heading">
+                        <th colspan="4">Student Result Board</th>
+                    </tr>
+                    <tr id="subheading">
+                        <th>Student Name</th>
+                        <th>Roll Number</th>
+                        <th>Total marks</th>
+                        <th>Status</th>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript">
+
+        //function to capitalizeFirstLetter
+        function capitalizeFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+        }
+        
+        //var datas = JSON.parse(data);
+        //console.log(data[0].marks.English);
+        var row = "";
+        var max = 0;
+        var maxIndex = 5;
+        var tempSum = 0;
+        for(var i = 0; i < data.length; i++)    {
+            var status = "Pass";
+            if(data[i].marks.Maths < 20 || data[i].marks.English < 20 || data[i].marks.Science < 20)    {
+                status = "Fail";
+            }
+            var sum = parseInt(data[i].marks.Maths) + parseInt(data[i].marks.English) + parseInt(data[i].marks.Science);
+            if (max < sum) {
+                max = sum;
+                maxIndex = i;
+            }
+            row += "<tr><td>" + capitalizeFirstLetter(data[i].name) + "</td><td>" + data[i].rollNumber + "</td><td>" + sum + "</td><td class =" + status + ">" + status + "</td></tr>";
+        }
+        $("#student_table").append(row);
+
+        var cols = [];
+        cols.forEach(function(col, index){
+            var max = Math.max.apply(null, col);
+            var min = Math.min.apply(null, col)
+            $('#student_table tr').find('td:eq('+(index+1)+')').each(function(i, td){
+              $(td).toggleClass('max', +$(td).text() === max)
+            })
+          })
+
+    </script>
+</html>

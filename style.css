@@ -1,0 +1,16 @@
+.Fail   {
+    color: red;
+}
+
+h2{
+    text-align: center;
+}
+
+#heading{
+    font-weight: bold;
+}
+
+#subheading{
+    font-weight: bold;
+    font-style: italic;
+}
